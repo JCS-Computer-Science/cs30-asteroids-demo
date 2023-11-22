@@ -6,6 +6,7 @@ class Ship extends Sprite {
 	constructor(x, y) {
 		super(x, y, SHIPSIZE);
 		this.angle = 0;
+		this.img = loadImage("./ship.png");
 	}
 	control() {
 		if (keyIsDown(LEFT_ARROW)) {
@@ -17,11 +18,14 @@ class Ship extends Sprite {
 		if (keyIsDown(UP_ARROW)) {
 			let xAccel = -ACCEL * sin(this.angle);
 			this.xSpeed += xAccel;
+
 			let yAccel = -ACCEL * cos(this.angle);
 			this.ySpeed += yAccel;
 		}
 	}
 	draw() {
+		imageMode(CENTER);
+
 		stroke(255);
 		noFill();
 
@@ -29,11 +33,12 @@ class Ship extends Sprite {
 
 		translate(this.x, this.y);
 		rotate(-this.angle);
-		triangle(0, -20, 10, 10, -10, 10);
+		image(this.img, 0, 0, 50, 50);
+		// triangle(0, -20, 10, 10, -10, 10);
 
 		pop();
 
-		stroke(255, 0, 0);
-		circle(this.x, this.y, this.size);
+		// stroke(255, 0, 0);
+		// circle(this.x, this.y, this.size);
 	}
 }

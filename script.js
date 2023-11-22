@@ -1,11 +1,11 @@
 let asteroids = [];
+let lasers = [];
 let player;
-
-console.log(asteroids);
 
 function setup() {
 	createCanvas(600, 400);
 	player = new Ship(width / 2, height / 2);
+
 	for (let i = 0; i < 10; i++) {
 		let randX = random(width);
 		let randY = random(height);
@@ -16,6 +16,7 @@ function setup() {
 
 function draw() {
 	background(0);
+
 	player.control();
 	player.update();
 	player.draw();
@@ -30,5 +31,23 @@ function draw() {
 				asteroids[j].ySpeed *= -1;
 			}
 		}
+	}
+	for (let i = 0; i < lasers.length; i++) {
+		lasers[i].update();
+		lasers[i].draw();
+		for (let j = 0; j < asteroids.length; j++) {
+			if (lasers[i].checkCollision(asteroids[j])) {
+				console.log("laser hits asteroid");
+				lasers.splice(i, 1);
+				asteroids.splice(j, 1);
+				break;
+			}
+		}
+	}
+}
+
+function keyPressed() {
+	if (key == " ") {
+		lasers.push(new Laser(player.x, player.y, player.angle));
 	}
 }
